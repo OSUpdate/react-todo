@@ -4,13 +4,11 @@ import { Todo } from "@/model/todo";
 
 export default function TodoComponent({ id, value, onUpdate, onRemove }: Todo) {
     const [isUpdate, setisUpdateState] = useState<boolean>(false);
-    const [text, setText] = useState<string>("");
 
     function changeIsUpdate() {
         setisUpdateState(!isUpdate);
     }
     function onChange(e: { target: { value: string } }) {
-        // setText(e.target.value);
         console.log(onUpdate);
         onUpdate(id, e.target.value);
     }
