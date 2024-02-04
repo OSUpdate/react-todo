@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import TodoComponent from './todo';
 import { Todo } from '@/model/todo';
+import { useModal } from "@/hooks"
 
 export default function TodosComponent() {
     const [todos, setTodosState] = useState<Todo[]>([]);
+
+    const { setModal, showModal } = useModal()
     useEffect(() => {
 
         console.log(todos);
@@ -48,18 +51,24 @@ export default function TodosComponent() {
 
     }
 
-
+    function clickModalBtn() {
+        setModal({ title: "test", content: "test", yes: "확인", no: "닫기" });
+        showModal();
+    }
     return (
-        <>
+        <div className="todos">
             <div className='flex row'>
                 <button onClick={addTodo} >추가</button>
+            </div>
+            <div>
+                <button onClick={clickModalBtn}>모달테스트</button>
             </div>
             <div className="flex column">
                 {todos.map(function (todo, index) {
                     return <TodoComponent {...todo} key={`todo-${todo.id}`} />
                 })}
             </div>
-        </>
+        </div>
     )
 
 }

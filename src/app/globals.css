@@ -17,17 +17,64 @@
 }
 
 body {
+  top: 0;
+  left:0;
+  position:fixed;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.modal{
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.modal__back {
+  z-index: -1;
+  pointer-events: all;
+  outline: 0;
+  background: rgba(0,0,0,0.4);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.modal__wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.modal__inner {
+  position: fixed;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal__card {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+  border-radius: 4px;
+  vertical-align: top;
+  background: #fff;
+  max-width: 560px;
+  max-height: calc(100vh - 48px);
 }
