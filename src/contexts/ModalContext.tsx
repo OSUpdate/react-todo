@@ -8,8 +8,9 @@ type modal = {
     setModal: Function,
     showModal: Function,
     hideModal: Function,
+    callback: Function
 }
-const initialState: modal = { title: "", content: "", yes: "확인", no: "닫기", show: false, setModal: () => { }, showModal: () => { }, hideModal: () => { } }
+const initialState: modal = { title: "", content: "", yes: "확인", no: "닫기", show: false, setModal: () => { }, showModal: () => { }, hideModal: () => { }, callback: () => { } }
 const ModalContext = createContext<modal>({ ...initialState });
 type ModalProviderProps = {
     children: ReactNode
@@ -20,11 +21,16 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     const [yes, setYes] = useState("");
     const [no, setNo] = useState("");
     const [show, setShow] = useState(false);
-    const setModal = ({ title, content, yes, no, show }: modal) => {
+    const [action, setAction] = useState(() => () => { });
+    const setModal = ({ title, content, yes, no, show, callback }: modal) => {
         setTitle(title);
         setContent(content);
         setYes(yes);
         setNo(no);
+        setAction(() => () => {
+            hideModal();
+            callback();
+        });
     }
     const showModal = () => {
         setShow(true);
@@ -32,6 +38,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     const hideModal = () => {
         setShow(false);
     }
+    const callback = () => {
+        action();
+    };
     return (
         <ModalContext.Provider
             value={{
@@ -42,7 +51,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
                 show,
                 setModal,
                 showModal,
-                hideModal
+                hideModal,
+                callback
             }}>
             {children}
         </ModalContext.Provider>

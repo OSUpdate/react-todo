@@ -1,7 +1,16 @@
 import { useModal } from "@/hooks";
 
 export default function Modal() {
-    const { show, title, content, yes, no, hideModal } = useModal()
+    const { show, title, content, yes, no, hideModal, callback } = useModal()
+
+    const header = title ? (
+        <div className="card__header">
+            <div className="card__header--text">
+                <h5>{title}</h5>
+            </div>
+        </div>) : "";
+
+
 
     const modal = (
         <div className="modal">
@@ -9,21 +18,19 @@ export default function Modal() {
                 <div className="modal__back"></div>
                 <div className="modal__inner">
                     <div className="modal__card">
-                        <div className="card__header">
-                            <div className="card__header--text">
-                                <h5>{title}</h5>
-                            </div>
-                        </div>
-                        <div className="card__body">
-                            <div className="card__content">
-                                <div className="card__content--text">
-                                    <p>{content}</p>
+                        <div className="card">
+                            {header}
+                            <div className="card__body">
+                                <div className="card__content">
+                                    <div className="card__content--text">
+                                        <p>{content}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="modal__btns">
-                                <button onClick={() => hideModal()}>{no}</button>
-                                <button>{yes}</button>
-                            </div>
+                        </div>
+                        <div className="modal__btns">
+                            <button onClick={() => hideModal()}>{no}</button>
+                            <button onClick={() => callback()}>{yes}</button>
                         </div>
                     </div>
                 </div>
